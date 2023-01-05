@@ -52,8 +52,32 @@ router.get("/", function (req, res, next) {
                     const recipes = await sequelize.Recipe.findAll({});
                     console.log(recipes, "hola");
                     let response = [...recipes, ...apiItems];
-                    if (response.length > 0) res.json(response);
-                    else
+                    if (response.length > 0) {
+                        // console.log(
+                        //     response.map((a) => {
+                        //         return {
+                        //             title: a.title,
+                        //             diets: a.diets,
+                        //             id: a.id,
+                        //             healthScore: a.healthScore,
+                        //             instructions: a.instructions,
+                        //             summary: a.summary,
+                        //         };
+                        //     })
+                        // );
+                        res.json(
+                            response.map((a) => {
+                                return {
+                                    id: a.id,
+                                    title: a.title,
+                                    diets: a.diets,
+                                    healthScore: a.healthScore,
+                                    instructions: a.instructions,
+                                    summary: a.summary,
+                                };
+                            })
+                        );
+                    } else
                         res.json({
                             error: "No existe ninguna receta.",
                         });
