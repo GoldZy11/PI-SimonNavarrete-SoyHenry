@@ -1,0 +1,30 @@
+.input-bar {
+    display: block;
+    width: calc(
+        100% - 24px
+    ); /*20px [ left & Right ] padding + 4px border [ left & Right ] */
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+    padding: 5px;
+    border: 1px solid #58b455;
+    /* margin: 0 auto; */
+}
+
+.container-searchbar {
+    width: 30vw;
+    position: relative;
+}
+.container-searchbar form button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 50px;
+    background: transparent;
+    border: transparent;
+    font-size: 20px;
+    color: #58b455;
+    cursor: pointer;
+    outline: 0;
+}
