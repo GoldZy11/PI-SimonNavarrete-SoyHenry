@@ -1,12 +1,18 @@
 import React from "react";
+import { Card } from "../Recipes/Card";
 
-export const CardsList = () => {
+export const CardsList = ({ recipes }) => {
     return (
         <div>
-            {/* Image */}
-            <></>
-            {/* Name */}
-            {/* Diet type */}
+            {recipes.map((recipe, index) => {
+                return (
+                    <Card
+                        title={recipe.title}
+                        image={recipe.image}
+                        diets={recipe.diets}
+                    />
+                );
+            })}
         </div>
     );
 };
