@@ -1,7 +1,7 @@
 /* Recipes Card start */
 .card-container {
     display: flex;
-    width: 100%;
+    /* width: 100%; */
     padding: 10px;
     height: 100px;
     background: rgba(0, 0, 0, 0.28);
@@ -19,8 +19,7 @@
     max-height: 100%;
     border-radius: 8px;
 }
-.text-container{
-
+.text-container {
 }
 .card-title {
     font-size: 1.5rem;
@@ -28,14 +27,53 @@
 }
 .diet-list {
     display: flex;
-    flex-direction: column;
+    gap: 0.2rem;
     padding: 0;
 }
 .diet-list li {
     text-decoration: none;
     list-style: none;
 }
-.diet-name{
+.diet-item {
+    border: solid 1px #b155b4;
+    width: min-content;
+    padding: 0.2rem;
+    border-radius: 0.25rem;
+}
+.diet-name {
+    font-size: 0.75rem;
     margin: 0;
 }
-/* Recipes Card end */
+.cardList-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    flex-direction: row;
+    justify-content: center;
+}
+.pagination-container {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+}
+.pagination-item {
+    color: darkgray;
+    cursor: pointer;
+}
+.pagination-item.currentPage {
+    color: black;
+}
+.pagination-button {
+    cursor: pointer;
+    transition: 0.1s all ease-in;
+}
+.pagination-button:hover {
+    font-size: 1.1rem;
+}
+.pagination-button.limit {
+    color: darkgray;
+}
+/* Recipes Card end */ ;

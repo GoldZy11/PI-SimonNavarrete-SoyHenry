@@ -10,13 +10,15 @@ export const Card = ({ image, title, diets }) => {
             </div>
             <div className="text-container">
                 <h3 className="card-title">{title}</h3>
-                {diets.map((diet, index) => {
-                    return (
-                        <div className="diet-item">
-                            <p className="diet-name">{diet}</p>
-                        </div>
-                    );
-                })}
+                <div className="diet-list">
+                    {diets.map((diet, index) => {
+                        return (
+                            <div className="diet-item">
+                                <p className="diet-name">{diet}</p>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
             {/* Name */}
             {/* Diet type */}

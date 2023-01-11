@@ -6,7 +6,7 @@ export const SearchBar = () => {
             <form>
                 <input className="input-bar" type="text" name="search" />
                 <button type="submit">
-                    <i class="fa fa-search"></i>
+                    <i className="fa fa-search"></i>
                 </button>
             </form>
         </div>
