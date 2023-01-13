@@ -28,21 +28,28 @@ export default (state = initialState, action) => {
         //         ...state,
         //         amigos: state.amigos,
         //     };
+        case "CREATE_RECIPE":
+            return {
+                ...state,
+                loading: false,
+            };
         case "GET_ALL":
-            recipesAgent.Recipes.recipesList()
-                .then((response) => {
-                    console.log(response);
-                    return {
-                        ...state,
-                        recipes: state.recipes,
-                    };
-                })
-                .catch(() => {
-                    return {
-                        ...state,
-                        recipes: state.recipes,
-                    };
-                });
+            return {
+                ...state,
+                loading: false,
+                recipes: action.recipes,
+            };
+        case "GET_SEARCH":
+            return {
+                ...state,
+                loading: false,
+                recipes: action.recipes,
+            };
+        case "LOADING":
+            return {
+                ...state,
+                loading: true,
+            };
         // state.amigos.push("Tito");
 
         default:

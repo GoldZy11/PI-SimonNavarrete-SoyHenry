@@ -12,6 +12,7 @@
 }
 
 .container-searchbar {
+    margin: 1rem auto;
     width: 30vw;
     position: relative;
 }

@@ -13,7 +13,9 @@ const requests = {
 };
 
 const Recipes = {
-    recipesList: () => requests.get(),
+    recipesList: () => requests.get(url + "/recipes"),
+    recipesSearch: (text) => requests.get(url + `/recipes?name=${text}`),
+    recipesCreate: (body) => requests.post(url + "/recipes", body),
 };
 
 const recipesAgent = {

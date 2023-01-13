@@ -1,7 +1,7 @@
 /* Recipes Card start */
 .card-container {
     display: flex;
-    /* width: 100%; */
+    width: 100%;
     padding: 10px;
     height: 100px;
     background: rgba(0, 0, 0, 0.28);
@@ -22,10 +22,16 @@
 .text-container {
 }
 .card-title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 50px;
     font-size: 1.5rem;
     margin: 0;
+    width: 250px;
 }
 .diet-list {
+    margin-top: 2px;
     display: flex;
     gap: 0.2rem;
     padding: 0;
@@ -46,11 +52,12 @@
 }
 .cardList-container {
     margin-top: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
     flex-direction: row;
     justify-content: center;
+    display: grid;
+    column-gap: 3rem;
+    row-gap: 2rem;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 .pagination-container {
     margin-top: 1rem;

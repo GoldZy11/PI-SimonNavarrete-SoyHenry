@@ -8,6 +8,7 @@ export const Filters = () => {
                 display: "flex",
                 flexDirection: "row",
                 gap: 5,
+                justifyContent: "center",
             }}
         >
             <div className="dropdown">

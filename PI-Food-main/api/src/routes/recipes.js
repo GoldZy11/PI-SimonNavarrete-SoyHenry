@@ -3,7 +3,11 @@ var router = express.Router();
 var sequelize = require("../db");
 const Recipe = require("../models/Recipe");
 /* GET users listing. */
-router.get("/", function (req, res, next) {
+router.get("/test", async function (req, res, next) {
+    const recipes = await sequelize.Recipe.findAll({});
+    res.json(recipes);
+});
+router.get("/", async function (req, res, next) {
     const { name } = req.query;
     let response = [];
     if (name) {
@@ -48,6 +52,7 @@ router.get("/", function (req, res, next) {
             .then(async (data) => {
                 try {
                     let apiItems = data.results;
+                    console.log(apiItems, "test");
                     // let result = filtred.map((element) => {element.title})
                     const recipes = await sequelize.Recipe.findAll({});
                     console.log(recipes, "hola");
@@ -55,15 +60,27 @@ router.get("/", function (req, res, next) {
                     if (response.length > 0) {
                         res.json(
                             response.map((a) => {
-                                return {
-                                    id: a.id,
-                                    title: a.title,
-                                    diets: a.diets,
-                                    healthScore: a.healthScore,
-                                    instructions: a.instructions,
-                                    summary: a.summary,
-                                    image: a.image,
-                                };
+                                if (a.diets) {
+                                    return {
+                                        id: a.id,
+                                        title: a.title,
+                                        diets: a.diets,
+                                        healthScore: a.healthScore,
+                                        instructions: a.instructions,
+                                        summary: a.summary,
+                                        image: a.image,
+                                    };
+                                } else {
+                                    return {
+                                        id: a.id,
+                                        title: a.title,
+                                        diets: [],
+                                        healthScore: a.healthScore,
+                                        instructions: a.instructions,
+                                        summary: a.summary,
+                                        image: a.image,
+                                    };
+                                }
                             })
                         );
                     } else
@@ -77,6 +94,29 @@ router.get("/", function (req, res, next) {
                     });
                 }
             });
+        // .catch(async () => {
+        //     try {
+        //         const recipes = await sequelize.Recipe.findAll({});
+        //         res.json(
+        //             recipes.map((a) => {
+        //                 return {
+        //                     id: a.id,
+        //                     title: a.title,
+        //                     diets: a.diets,
+        //                     healthScore: a.healthScore,
+        //                     instructions: a.instructions,
+        //                     summary: a.summary,
+        //                     image: a.image,
+        //                 };
+        //             })
+        //         );
+        //     } catch (error) {
+        //         res.status(500);
+        //         res.json({
+        //             message: "Algo Ocurrio, vuelva a intentarlo mas tarde",
+        //         });
+        //     }
+        // });
     }
 });
 router.get("/:id", function (req, res, next) {
@@ -131,6 +171,7 @@ router.post("/", async function (req, res, next) {
         res.json(newRecipe);
     } catch (error) {
         res.status(500);
+        console.log(error.message);
         res.send(error.message);
     }
 });

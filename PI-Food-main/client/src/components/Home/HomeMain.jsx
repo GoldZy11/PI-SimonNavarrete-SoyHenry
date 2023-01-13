@@ -4,11 +4,10 @@ import "../../styles/Home.css";
 import * as actionsCreators from "../../actions";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-
 import { CardsList } from "./CardsList";
 import { Filters } from "./Filters";
 
-const HomeMain = ({ getAll, recipes }) => {
+const HomeMain = ({ getAll, recipes, status }) => {
     const testCards = [
         {
             title: "Sopa de awa 1",
@@ -282,24 +281,28 @@ const HomeMain = ({ getAll, recipes }) => {
         },
     ];
     useEffect(() => {
-        console.log(recipes);
         getAll();
+        // actionsCreators.getAll( );
     }, []);
-
+    if (status) {
+        return (
+            <div className="loader-container">
+                <span class="loader"></span>
+            </div>
+        );
+    }
     return (
         <div className="home-container">
-            {/* SearchBar and filters*/}
-            <SearchBar />
-            {/* Filters */}
-            <Filters />
+            
             {/* Recipes List */}
-            <CardsList recipes={testCards} />
+            <CardsList recipes={recipes} />
             {/* Pagination */}
         </div>
     );
 };
 const mapStateToProps = (state) => ({
     recipes: state.recipes,
+    status: state.loading,
 });
 
 function mapDispatchToProps(dispatch) {

@@ -1,4 +1,6 @@
 main {
+    max-height: 100vh;
+    overflow-y: scroll;
     background-image: url("../src/addons/images/vecteezy_hand-drawn-vegetables-seamless-pattern-vegan-food_5490026.jpg");
 }
 .App {

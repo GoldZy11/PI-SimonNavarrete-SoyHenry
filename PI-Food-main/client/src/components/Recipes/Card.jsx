@@ -12,11 +12,12 @@ export const Card = ({ image, title, diets }) => {
                 <h3 className="card-title">{title}</h3>
                 <div className="diet-list">
                     {diets.map((diet, index) => {
-                        return (
-                            <div className="diet-item">
-                                <p className="diet-name">{diet}</p>
-                            </div>
-                        );
+                        if (index < 5)
+                            return (
+                                <div className="diet-item">
+                                    <p className="diet-name">{diet}</p>
+                                </div>
+                            );
                     })}
                 </div>
             </div>
