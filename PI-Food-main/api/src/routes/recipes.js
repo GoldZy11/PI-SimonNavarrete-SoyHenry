@@ -4,12 +4,18 @@ var sequelize = require("../db");
 const Recipe = require("../models/Recipe");
 /* GET users listing. */
 router.get("/test", async function (req, res, next) {
-    const recipes = await sequelize.Recipe.findAll({});
+    const recipes = await sequelize.Recipe.findAll({
+        include: {
+            model: sequelize.Diet,
+            through: {
+                attributes: [],
+            },
+        },
+    });
     res.json(recipes);
 });
 router.get("/", async function (req, res, next) {
     const { name } = req.query;
-    let response = [];
     if (name) {
         fetch(
             "https://api.spoonacular.com/recipes/complexSearch?apiKey=" +
@@ -19,23 +25,55 @@ router.get("/", async function (req, res, next) {
             .then((response) => response.json())
             .then(async (data) => {
                 try {
-                    let filtred = data.results.filter((element) =>
-                        element.title.includes(name)
-                    );
-                    // let result = filtred.map((element) => {element.title})
-                    const recipes = await sequelize.Recipe.findAll({});
-                    let response = [
-                        ...recipes.filter((element) =>
-                            element.title.includes(name)
-                        ),
-                        ...filtred,
-                    ];
-                    if (response.length > 0) res.json(response);
-                    else
+                    let apiItems = data.results;
+                    const recipes = await sequelize.Recipe.findAll({
+                        include: {
+                            model: sequelize.Diet,
+                            through: {
+                                attributes: [],
+                            },
+                        },
+                    });
+                    var allRecipes = [];
+                    if (apiItems) {
+                        const filtred = apiItems.filter((recipe) =>
+                            recipe.title.includes(name)
+                        );
+                        allRecipes = [
+                            ...recipes.filter((recipe) =>
+                                recipe.title.includes(name)
+                            ),
+                            ...filtred.map((recipe) => {
+                                return {
+                                    id: recipe.id,
+                                    title: recipe.title,
+                                    diets: recipe.diets.map((diet) => {
+                                        return {
+                                            name: diet,
+                                        };
+                                    }),
+                                    healthScore: recipe.healthScore,
+                                    instructions: recipe.instructions,
+                                    summary: recipe.summary,
+                                    image: recipe.image,
+                                };
+                            }),
+                        ];
+                    } else {
+                        allRecipes = [
+                            ...recipes.filter((recipe) =>
+                                recipe.title.includes(name)
+                            ),
+                        ];
+                    }
+                    if (allRecipes.length > 0) res.json(allRecipes);
+                    else {
                         res.json({
                             error: "No existe ninguna receta con esa palabra",
                         });
+                    }
                 } catch (error) {
+                    console.log(error);
                     res.status(500);
                     res.json({
                         message: "Algo Ocurrio, vuelva a intentarlo mas tarde",
@@ -52,42 +90,46 @@ router.get("/", async function (req, res, next) {
             .then(async (data) => {
                 try {
                     let apiItems = data.results;
-                    console.log(apiItems, "test");
-                    // let result = filtred.map((element) => {element.title})
-                    const recipes = await sequelize.Recipe.findAll({});
-                    console.log(recipes, "hola");
-                    let response = [...recipes, ...apiItems];
-                    if (response.length > 0) {
-                        res.json(
-                            response.map((a) => {
-                                if (a.diets) {
-                                    return {
-                                        id: a.id,
-                                        title: a.title,
-                                        diets: a.diets,
-                                        healthScore: a.healthScore,
-                                        instructions: a.instructions,
-                                        summary: a.summary,
-                                        image: a.image,
-                                    };
-                                } else {
-                                    return {
-                                        id: a.id,
-                                        title: a.title,
-                                        diets: [],
-                                        healthScore: a.healthScore,
-                                        instructions: a.instructions,
-                                        summary: a.summary,
-                                        image: a.image,
-                                    };
-                                }
-                            })
-                        );
+                    const recipes = await sequelize.Recipe.findAll({
+                        include: {
+                            model: sequelize.Diet,
+                            through: {
+                                attributes: [],
+                            },
+                        },
+                    });
+                    var allRecipes = [];
+                    if (apiItems) {
+                        allRecipes = [
+                            ...recipes,
+                            ...apiItems.map((recipe) => {
+                                return {
+                                    id: recipe.id,
+                                    title: recipe.title,
+                                    diets: recipe.diets.map((diet) => {
+                                        return {
+                                            name: diet,
+                                        };
+                                    }),
+                                    healthScore: recipe.healthScore,
+                                    instructions: recipe.instructions,
+                                    summary: recipe.summary,
+                                    image: recipe.image,
+                                };
+                            }),
+                        ];
+                    } else {
+                        allRecipes = [...recipes];
+                    }
+
+                    if (allRecipes.length > 0) {
+                        res.json(allRecipes);
                     } else
                         res.json({
                             error: "No existe ninguna receta.",
                         });
                 } catch (error) {
+                    console.log(error);
                     res.status(500);
                     res.json({
                         message: "Algo Ocurrio, vuelva a intentarlo mas tarde",
@@ -130,8 +172,21 @@ router.get("/:id", function (req, res, next) {
     )
         .then((response) => response.json())
         .then(async (data) => {
+            console.log(data);
             try {
-                res.json(data);
+                res.json({
+                    id: data.id,
+                    title: data.title,
+                    diets: data.diets.map((diet) => {
+                        return {
+                            name: diet,
+                        };
+                    }),
+                    healthScore: data.healthScore,
+                    instructions: data.instructions,
+                    summary: data.summary,
+                    image: data.image,
+                });
                 // else
                 //     res.json({
                 //         error: "No existe ninguna receta con esa palabra",
@@ -159,7 +214,7 @@ router.get("/:id", function (req, res, next) {
         });
 });
 router.post("/", async function (req, res, next) {
-    const { title, summary, healthScore, instructions } = req.body;
+    const { title, summary, healthScore, instructions, diets } = req.body;
     try {
         const newRecipe = await sequelize.Recipe.create({
             title,
@@ -167,6 +222,8 @@ router.post("/", async function (req, res, next) {
             healthScore,
             instructions,
         });
+        const addDiets = await newRecipe.setDiets(diets);
+        console.log(addDiets, "Diets");
         console.log(newRecipe, "created");
         res.json(newRecipe);
     } catch (error) {

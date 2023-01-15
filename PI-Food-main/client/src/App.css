@@ -3,6 +3,9 @@ main {
     overflow-y: scroll;
     background-image: url("../src/addons/images/vecteezy_hand-drawn-vegetables-seamless-pattern-vegan-food_5490026.jpg");
 }
+a{
+    text-decoration: none;
+}
 .App {
     text-align: center;
 }
@@ -40,4 +43,37 @@ main {
     to {
         transform: rotate(360deg);
     }
+}
+
+/* Custom Button */
+button {
+    cursor: pointer;
+    font-weight: 700;
+    font-family: Helvetica, "sans-serif";
+    transition: all 0.2s;
+    padding: 10px 20px;
+    border-radius: 100px;
+    background: #58b455;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+}
+
+button:hover {
+    background: #428740;
+}
+
+button > svg {
+    width: 34px;
+    margin-left: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+button:hover svg {
+    transform: translateX(5px);
+}
+
+button:active {
+    transform: scale(0.95);
 }

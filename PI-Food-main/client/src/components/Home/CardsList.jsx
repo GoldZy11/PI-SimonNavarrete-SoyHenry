@@ -7,6 +7,8 @@ export const CardsList = ({ recipes }) => {
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
+        console.log(recipes);
+        setPages([]);
         let i = 0;
         let array = [];
         while (i < Math.ceil(recipes.length / 9)) {
@@ -14,7 +16,7 @@ export const CardsList = ({ recipes }) => {
             setPages([...array]);
             i = i + 1;
         }
-    }, []);
+    }, [recipes]);
     const handleNextPage = () => {
         if (currentPage < pages.length) {
             setCurrentPage(currentPage + 1);
@@ -32,14 +34,17 @@ export const CardsList = ({ recipes }) => {
                     if (
                         (currentPage - 1) * 9 <= index &&
                         index < currentPage * 9
-                    )
+                    ) {
                         return (
                             <Card
+                                key={index}
                                 title={recipe.title}
                                 image={recipe.image}
                                 diets={recipe.diets}
+                                id={recipe.id}
                             />
                         );
+                    }
                 })}
             </div>
             {/* Pagination */}

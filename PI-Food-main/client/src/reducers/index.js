@@ -1,33 +1,12 @@
-import recipesAgent from "../agent";
-
 const initialState = {
     recipes: [],
+    recipe: {},
     loading: false,
+    diets: [],
 };
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        // case "INCREMENT":
-        //     return {
-        //         ...state,
-        //         count: state.count + 1,
-        //     };
-        // case "DECREMENT":
-        //     return {
-        //         ...state,
-        //         count: state.count - 1,
-        //     };
-        // case "RESET":
-        //     return {
-        //         ...state,
-        //         count: 0,
-        //     };
-        // case "ADD_FRIEND":
-        //     state.amigos.push("Tito");
-        //     return {
-        //         ...state,
-        //         amigos: state.amigos,
-        //     };
         case "CREATE_RECIPE":
             return {
                 ...state,
@@ -49,6 +28,23 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 loading: true,
+            };
+        case "ERROR":
+            return {
+                ...state,
+                loading: false,
+            };
+        case "GET_DIETS":
+            return {
+                ...state,
+                loading: false,
+                diets: action.diets,
+            };
+        case "GET_RECIPE":
+            return {
+                ...state,
+                loading: false,
+                recipe: action.recipe,
             };
         // state.amigos.push("Tito");
 

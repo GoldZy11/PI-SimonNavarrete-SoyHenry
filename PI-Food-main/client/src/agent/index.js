@@ -16,10 +16,15 @@ const Recipes = {
     recipesList: () => requests.get(url + "/recipes"),
     recipesSearch: (text) => requests.get(url + `/recipes?name=${text}`),
     recipesCreate: (body) => requests.post(url + "/recipes", body),
+    recipe: (id) => requests.get(url + `/recipes/${id}`),
+};
+const Diets = {
+    dietsList: () => requests.get(url + "/diets"),
 };
 
-const recipesAgent = {
+const Agent = {
     Recipes,
+    Diets,
 };
 
-export default recipesAgent;
+export default Agent;

@@ -1,18 +1,8 @@
-import recipesAgent from "../agent";
+import Agent from "../agent";
 
-export function increment() {
+export function error() {
     return {
-        type: "INCREMENT",
-    };
-}
-export function decrement() {
-    return {
-        type: "DECREMENT",
-    };
-}
-export function reset() {
-    return {
-        type: "RESET",
+        type: "ERROR",
     };
 }
 
@@ -21,10 +11,22 @@ export function loading() {
         type: "LOADING",
     };
 }
+export function getById(recipe) {
+    return {
+        type: "GET_RECIPE",
+        recipe,
+    };
+}
 export function get(recipes) {
     return {
         type: "GET_ALL",
         recipes,
+    };
+}
+export function allDiets(diets) {
+    return {
+        type: "GET_DIETS",
+        diets,
     };
 }
 export function created(recipes) {
@@ -36,10 +38,42 @@ export function created(recipes) {
 export function getAll() {
     return function (dispatch) {
         dispatch(loading());
-        recipesAgent.Recipes.recipesList()
+        Agent.Recipes.recipesList()
             .then((response) => {
-                console.log(response);
-                dispatch(get(response));
+                if (response.error) {
+                    dispatch(error());
+                } else {
+                    dispatch(get(response));
+                }
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
+    };
+}
+export function getRecipe(id) {
+    return function (dispatch) {
+        dispatch(loading());
+        Agent.Recipes.recipe(id)
+            .then((response) => {
+                if (response.error) {
+                    dispatch(error());
+                } else {
+                    dispatch(getById(response));
+                }
+            })
+            .catch((error) => {
+                dispatch(error());
+                console.log(error.message);
+            });
+    };
+}
+export function getDiets() {
+    return function (dispatch) {
+        dispatch(loading());
+        Agent.Diets.dietsList()
+            .then((response) => {
+                dispatch(allDiets(response));
             })
             .catch((error) => {
                 console.log(error.message);
@@ -49,7 +83,7 @@ export function getAll() {
 export function getSearch(search) {
     return function (dispatch) {
         dispatch(loading());
-        recipesAgent.Recipes.recipesSearch(search)
+        Agent.Recipes.recipesSearch(search)
             .then((response) => {
                 console.log(response);
                 dispatch(get(response));
@@ -62,7 +96,7 @@ export function getSearch(search) {
 export function createRecipe(recipe) {
     return function (dispatch) {
         dispatch(loading());
-        recipesAgent.Recipes.recipesCreate(recipe)
+        Agent.Recipes.recipesCreate(recipe)
             .then((response) => {
                 console.log(response);
                 dispatch(created());

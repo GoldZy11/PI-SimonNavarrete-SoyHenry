@@ -1,6 +1,12 @@
 import React from "react";
 import "../../styles/Filters.css";
-export const Filters = () => {
+import { Link } from "react-router-dom";
+export const Filters = ({
+    diets,
+    handleDietFilter,
+    handleAlphabeticalOrder,
+    handleHealthScoreOrder,
+}) => {
     return (
         <div
             style={{
@@ -14,16 +20,59 @@ export const Filters = () => {
             <div className="dropdown">
                 <span>Diets</span>
                 <div className="dropdown-content">
-                    <div className="dropdown-item">hola</div>
-                    <div className="dropdown-item">chao</div>
-                    <div className="dropdown-item">hola</div>
+                    {diets.map((diet, index) => {
+                        return (
+                            <div
+                                key={index}
+                                className="dropdown-item"
+                                onClick={() => {
+                                    handleDietFilter(diet.name);
+                                }}
+                            >
+                                {diet.name}
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
             <div className="dropdown">
                 <span>Orden</span>
                 <div className="dropdown-content">
-                    <div className="dropdown-item">Orden Alfabetico</div>
-                    <div className="dropdown-item">Healt Score</div>
+                    <div
+                        className="dropdown-item"
+                        onClick={handleAlphabeticalOrder}
+                    >
+                        Orden Alfabetico
+                    </div>
+                    <div
+                        className="dropdown-item"
+                        onClick={handleHealthScoreOrder}
+                    >
+                        Healt Score
+                    </div>
+                </div>
+            </div>
+            <div className="dropdown">
+                <span>Options</span>
+                <div className="dropdown-content">
+                    <div
+                        key={"add_recipe"}
+                        className="dropdown-item"
+                        // onClick={() => {
+                        //     handleDietFilter(diet.name);
+                        // }}
+                    >
+                        <Link to={"/recipe/create"}>Add Recipe</Link>
+                    </div>
+                    <div
+                        key={"add_diet"}
+                        className="dropdown-item"
+                        // onClick={() => {
+                        //     handleDietFilter(diet.name);
+                        // }}
+                    >
+                        <Link to={"/diet/create"}>Add Diet</Link>
+                    </div>
                 </div>
             </div>
         </div>

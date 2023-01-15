@@ -1,26 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, useLocation, useParams } from "react-router-dom";
-import { Filters } from "../components/Home/Filters";
-import { SearchBar } from "../components/Home/SearchBar";
+import * as actionsCreators from "../actions";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import { CreateDiets } from "../pages/CreateDiets";
 import { CreateRecipe } from "../pages/CreateRecipe";
 import { Home } from "../pages/Home";
+import { Introduction } from "../pages/Introduction";
 import { Search } from "../pages/Search";
+import { Recipe } from "../pages/Recipe";
 
-export const AppRouter = () => {
+const AppRouter = ({ getDiets }) => {
     const location = useLocation();
-
+    useEffect(() => {
+        getDiets();
+    }, []);
     return (
         <main style={{ height: "100vh" }}>
-            {location.pathname !== "/recipe/create" && (
-                <>
-                    <SearchBar />
-                    {/* Filters */}
-                    <Filters />
-                </>
-            )}
-
             {/* <Routes> */}
+
             <Route path={"/home"}>
                 <Home />
             </Route>
@@ -33,7 +31,20 @@ export const AppRouter = () => {
             <Route path={"/diet/create"}>
                 <CreateDiets />
             </Route>
+            <Route path={"/recipe/:id"}>
+                <Recipe />
+            </Route>
+            <Route exact path={"/"}>
+                <Introduction />
+            </Route>
             {/* </Routes> */}
         </main>
     );
 };
+
+const mapStateToProps = (state) => ({});
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actionsCreators, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AppRouter);
