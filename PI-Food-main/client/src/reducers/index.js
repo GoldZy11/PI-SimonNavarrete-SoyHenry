@@ -3,6 +3,10 @@ const initialState = {
     recipe: {},
     loading: false,
     diets: [],
+    error: {
+        status: false,
+        message: "",
+    },
 };
 
 export default (state = initialState, action) => {
@@ -28,11 +32,19 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 loading: true,
+                error: {
+                    status: false,
+                    message: "",
+                },
             };
         case "ERROR":
             return {
                 ...state,
                 loading: false,
+                error: {
+                    status: true,
+                    message: action.error,
+                },
             };
         case "GET_DIETS":
             return {
@@ -46,7 +58,6 @@ export default (state = initialState, action) => {
                 loading: false,
                 recipe: action.recipe,
             };
-        // state.amigos.push("Tito");
 
         default:
             return { ...state };

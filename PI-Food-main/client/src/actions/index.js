@@ -1,11 +1,11 @@
 import Agent from "../agent";
 
-export function error() {
+export function setError(error) {
     return {
         type: "ERROR",
+        error,
     };
 }
-
 export function loading() {
     return {
         type: "LOADING",
@@ -41,7 +41,7 @@ export function getAll() {
         Agent.Recipes.recipesList()
             .then((response) => {
                 if (response.error) {
-                    dispatch(error());
+                    dispatch(setError());
                 } else {
                     dispatch(get(response));
                 }
@@ -57,13 +57,13 @@ export function getRecipe(id) {
         Agent.Recipes.recipe(id)
             .then((response) => {
                 if (response.error) {
-                    dispatch(error());
+                    dispatch(setError());
                 } else {
                     dispatch(getById(response));
                 }
             })
             .catch((error) => {
-                dispatch(error());
+                dispatch(setError());
                 console.log(error.message);
             });
     };
@@ -77,6 +77,19 @@ export function getDiets() {
             })
             .catch((error) => {
                 console.log(error.message);
+            });
+    };
+}
+export function createDiet(diet) {
+    return function (dispatch) {
+        dispatch(loading());
+        Agent.Diets.dietCreate(diet)
+            .then((response) => {
+                dispatch(allDiets(response));
+            })
+            .catch((error) => {
+                dispatch(setError(error.response.data.error));
+                console.log(error.response.data.error);
             });
     };
 }

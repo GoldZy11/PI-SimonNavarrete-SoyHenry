@@ -4,15 +4,30 @@ var sequelize = require("../db");
 router.post("/", async function (req, res, next) {
     const { name } = req.body;
     try {
-        const newDiet = await sequelize.Diet.create({
-            name,
+        const [newDiet, created] = await sequelize.Diet.findOrCreate({
+            where: { name: name },
+            defaults: {},
         });
-        console.log(newDiet, "created");
-        res.json(newDiet);
+        if (created) {
+            console.log(newDiet, "created");
+            const diets = await sequelize.Diet.findAll({
+                // include:sequelize.Recipe
+            });
+            res.json(diets);
+        } else {
+            res.status(500);
+            // console.log(error.message);
+            res.json({
+                error: "This diet already exists",
+            });
+        }
+        // const newDiet = await sequelize.Diet.fi({
+        //     name,
+        // });
     } catch (error) {
         res.status(500);
         console.log(error.message);
-        res.send(error.message);
+        res.json(error);
     }
 });
 router.get("/", async function (req, res, next) {

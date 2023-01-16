@@ -25,10 +25,10 @@ const AppRouter = ({ getDiets }) => {
             <Route path={"/search/:text"}>
                 <Search />
             </Route>
-            <Route path={"/recipe/create"}>
+            <Route path={"/add/recipe"}>
                 <CreateRecipe />
             </Route>
-            <Route path={"/diet/create"}>
+            <Route path={"/add/diet"}>
                 <CreateDiets />
             </Route>
             <Route path={"/recipe/:id"}>

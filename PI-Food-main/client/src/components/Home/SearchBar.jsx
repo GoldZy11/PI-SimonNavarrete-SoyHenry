@@ -24,7 +24,7 @@ export const SearchBar = () => {
                 gap: "10px",
             }}
         >
-            {location.pathname != "/home" && (
+            {location.pathname !== "/home" && (
                 <NavLink to={"/home"}>
                     <button className="backBtn">
                         <svg

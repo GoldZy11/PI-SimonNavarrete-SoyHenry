@@ -3,6 +3,7 @@ import * as actionsCreators from "../../actions";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 const RecipeMain = ({ recipe, status, getRecipe }) => {
     let { id } = useParams();
@@ -38,15 +39,10 @@ const RecipeMain = ({ recipe, status, getRecipe }) => {
                 <p className="summary-p">{recipe.summary}</p>
             </div>
             {/* diets and health score */}
-            <div className="data-container">
-                
-            </div>
-            <div
-                className="recipe-content-body-container"
-                dangerouslySetInnerHTML={{ __html: recipe.instructions }}
-            >
-                {}
-            </div>
+            <div className="data-container"></div>
+            <ReactMarkdown className="recipe-content-body-container">
+                {recipe.instructions}
+            </ReactMarkdown>
         </div>
     );
 };

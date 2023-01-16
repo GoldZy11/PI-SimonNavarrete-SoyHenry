@@ -214,13 +214,14 @@ router.get("/:id", function (req, res, next) {
         });
 });
 router.post("/", async function (req, res, next) {
-    const { title, summary, healthScore, instructions, diets } = req.body;
+    const { title, summary, healthScore, instructions, diets , image} = req.body;
     try {
         const newRecipe = await sequelize.Recipe.create({
             title,
             summary,
             healthScore,
             instructions,
+            image
         });
         const addDiets = await newRecipe.setDiets(diets);
         console.log(addDiets, "Diets");

@@ -20,6 +20,8 @@ const Recipes = {
 };
 const Diets = {
     dietsList: () => requests.get(url + "/diets"),
+    dietCreate: (body) => requests.post(url + "/diets", body),
+
 };
 
 const Agent = {

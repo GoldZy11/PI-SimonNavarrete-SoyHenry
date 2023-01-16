@@ -23,7 +23,7 @@ export const CardsList = ({ recipes }) => {
         }
     };
     const handlePrevPage = () => {
-        if (currentPage != 1) {
+        if (currentPage !== 1) {
             setCurrentPage(currentPage - 1);
         }
     };
@@ -62,6 +62,9 @@ export const CardsList = ({ recipes }) => {
                             className={`pagination-item ${
                                 page + 1 === currentPage ? "currentPage" : ""
                             }`}
+                            onClick={() => {
+                                setCurrentPage(page + 1);
+                            }}
                         >
                             {page + 1}
                         </div>

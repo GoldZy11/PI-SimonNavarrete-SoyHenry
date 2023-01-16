@@ -62,7 +62,7 @@ export const Filters = ({
                         //     handleDietFilter(diet.name);
                         // }}
                     >
-                        <Link to={"/recipe/create"}>Add Recipe</Link>
+                        <Link to={"/add/recipe"}>Add Recipe</Link>
                     </div>
                     <div
                         key={"add_diet"}
@@ -71,7 +71,7 @@ export const Filters = ({
                         //     handleDietFilter(diet.name);
                         // }}
                     >
-                        <Link to={"/diet/create"}>Add Diet</Link>
+                        <Link to={"/add/diet"}>Add Diet</Link>
                     </div>
                 </div>
             </div>
