@@ -32,9 +32,7 @@ const CreateDietMain = ({ status, error, createDiet }) => {
                     }}
                 >
                     <h2>Something went wrong! Try again.</h2>
-                    <p>
-                        Error: {error.message}
-                    </p>
+                    <p>Error: {error.message}</p>
                 </Modal>
             )}
 

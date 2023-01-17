@@ -55,6 +55,7 @@ const SearchMain = ({ getSearch, recipes, status, diets }) => {
     useEffect(() => {
         setRecipesFiltred(recipes);
     }, [recipes]);
+   
 
     if (status) {
         return (

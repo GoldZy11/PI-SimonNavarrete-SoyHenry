@@ -46,13 +46,16 @@ const HomeMain = ({ getAll, getDiets, recipes, diets, status }) => {
             }),
         ]);
     };
-    useEffect(() => {
-        getAll();
-    }, []);
+    // useEffect(() => {
+    //     getAll();
+    // }, []);
     useEffect(() => {
         setRecipesFiltred(recipes);
     }, [recipes]);
-
+    useEffect(() => {
+        getAll();
+        getDiets();
+    }, []);
     if (status) {
         return (
             <div className="loader-container">
@@ -71,10 +74,7 @@ const HomeMain = ({ getAll, getDiets, recipes, diets, status }) => {
                 handleAlphabeticalOrder={handleAlphabeticalOrder}
                 handleHealthScoreOrder={handleHealthScoreOrder}
             />
-            <CardsList
-                recipes={recipesFiltred}
-                status={status}
-            />
+            <CardsList recipes={recipesFiltred} status={status} />
             {/* Pagination */}
         </div>
     );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/CreateRecipe.css";
 import { connect } from "react-redux";
 import * as actionsCreators from "../../actions";
@@ -37,6 +37,10 @@ const CreateRecipeMain = ({ createRecipe, recipes, status, diets, error }) => {
         console.log({ ...recipe, diets: dietsSelected });
         createRecipe({ ...recipe, diets: dietsSelected });
     };
+    useEffect(() => {
+        
+        setShow(error.status);
+    }, [error]);
     return (
         <div className="card">
             {error && (

@@ -59,6 +59,7 @@ export const CardsList = ({ recipes }) => {
                 {pages.map((page, index) => {
                     return (
                         <div
+                            key={index}
                             className={`pagination-item ${
                                 page + 1 === currentPage ? "currentPage" : ""
                             }`}

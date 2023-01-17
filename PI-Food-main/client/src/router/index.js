@@ -11,10 +11,10 @@ import { Search } from "../pages/Search";
 import { Recipe } from "../pages/Recipe";
 
 const AppRouter = ({ getDiets }) => {
-    const location = useLocation();
-    useEffect(() => {
-        getDiets();
-    }, []);
+    // const location = useLocation();
+    // useEffect(() => {
+    //     getDiets();
+    // }, []);
     return (
         <main style={{ height: "100vh" }}>
             {/* <Routes> */}

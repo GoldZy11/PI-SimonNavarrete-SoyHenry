@@ -201,7 +201,15 @@ router.get("/:id", function (req, res, next) {
         })
         .catch(async (response) => {
             try {
-                const recipe = await sequelize.Recipe.findByPk(id);
+                const recipe = await sequelize.Recipe.findOne({
+                    where: { id: id },
+                    include: {
+                        model: sequelize.Diet,
+                        through: {
+                            attributes: [],
+                        },
+                    },
+                });
                 res.json(recipe);
             } catch (error) {
                 res.status(500);
@@ -214,14 +222,15 @@ router.get("/:id", function (req, res, next) {
         });
 });
 router.post("/", async function (req, res, next) {
-    const { title, summary, healthScore, instructions, diets , image} = req.body;
+    const { title, summary, healthScore, instructions, diets, image } =
+        req.body;
     try {
         const newRecipe = await sequelize.Recipe.create({
             title,
             summary,
             healthScore,
             instructions,
-            image
+            image,
         });
         const addDiets = await newRecipe.setDiets(diets);
         console.log(addDiets, "Diets");

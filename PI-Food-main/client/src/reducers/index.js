@@ -1,7 +1,7 @@
 const initialState = {
     recipes: [],
     recipe: {},
-    loading: false,
+    loading: true,
     diets: [],
     error: {
         status: false,
